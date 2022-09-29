@@ -1,33 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import PrimaryButton from './UIElements/PrimaryButton.vue';
-
-defineProps<{ msg: string }>()
+import PrimaryButton from './UIElements/PrimaryButton.vue'
+import { EnvelopeIcon } from '@heroicons/vue/24/solid'
 
 const count = ref(0)
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-  <div>
-    <PrimaryButton :text="'Login '+count" :full-width="true" @click="count++"/>
-    <PrimaryButton :text="'Login '+count" @click="count++"/>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+  <div class="container-fluid">
+    <PrimaryButton :text="'Login '+count" :trailing-icon="EnvelopeIcon" :full-width=true @click="count++"  />
+    <PrimaryButton :text="'Login '+count" :leading-icon="EnvelopeIcon" @click="count++" />
   </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p>Click on the Vite and Vue logos to learn more</p>
 </template>
