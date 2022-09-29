@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue';</script>
+</script>
 
 <template>
-  <HelloWorld />
+Marketing Page
 </template>

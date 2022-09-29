@@ -7,6 +7,7 @@ import Card from '@/components/UIElements/Card.vue'
 import { Auth } from 'aws-amplify'
 import { ref } from 'vue'
 import ErrorBanner from '@/components/UIElements/ErrorBanner.vue'
+import { useRouter } from 'vue-router'
 
 const login = {
   email: '',
@@ -19,6 +20,8 @@ let errors = ref({
   message: '',
 })
 
+const router = useRouter()
+
 const signIn = async () => {
   try {
     const auth = await Auth.signIn(login.email, login.password)
@@ -26,12 +29,12 @@ const signIn = async () => {
       errors.value.hasErrors = false
       errors.value.message = ''
     }
+    router.push('dashboard')
   } catch(e: unknown) {
     errors.value.message = (e as Error).message
     errors.value.hasErrors = true
   }
 }
-
 </script>
 
 <template>
@@ -62,7 +65,7 @@ const signIn = async () => {
             <Checkbox v-model="login.remember" id="remember-me" name="remember-me">Remember Me</Checkbox>
 
             <div class="text-sm">
-              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+              <a href="#" class="font-medium text-indigo-600 dark:text-indigo-500 dark:hover:text-indigo-400 hover:text-indigo-500">Forgot your password?</a>
             </div>
           </div>
 
