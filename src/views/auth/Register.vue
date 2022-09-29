@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import LoginContent from '../../components/LoginElements/LoginContent.vue'
-import Card from '../../components/UIElements/Card.vue'
-import InputField from '../../components/UIElements/InputField.vue'
-import PrimaryButton from '../../components/UIElements/PrimaryButton.vue'
-import BasicForm from '../../components/UIElements/BasicForm.vue';
+import { ref } from 'vue'
+import LoginContent from '@/components/LoginElements/LoginContent.vue'
+import Card from '@/components/UIElements/Card.vue'
+import InputField from '@/components/UIElements/InputField.vue'
+import PrimaryButton from '@/components/UIElements/PrimaryButton.vue'
+import BasicForm from '@/components/UIElements/BasicForm.vue'
 
 const login = {
-  email: '',
-  password: '',
-  confirm_password: '',
+  email: ref(''),
+  password: ref(''),
+  confirm_password: ref(''),
 }
 
 const signUp = () => {
@@ -20,11 +21,11 @@ const signUp = () => {
   <LoginContent title="Sign up for a new account">
     <Card>
       <BasicForm>
-        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
+        <InputField v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
-        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="">Password</InputField>
+        <InputField v-model="login.password.value" id="password" name="password" input-type="password" autocomplete="">Password</InputField>
 
-        <InputField v-model="login.confirm_password" id="confirm_password" name="confirm_password" input-type="password" autocomplete="">Confirm Password</InputField>
+        <InputField v-model="login.confirm_password.value" id="confirm_password" name="confirm_password" input-type="password" autocomplete="">Confirm Password</InputField>
 
         <div class="flex items-center justify-between">
           <div class="text-sm">

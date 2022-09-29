@@ -8,7 +8,12 @@ import PrimaryButton from '../../components/UIElements/PrimaryButton.vue'
 import { ref } from 'vue'
 
 const send = async () => {
-  Auth.forgotPassword(login.email.value)
+  try {
+    await Auth.forgotPassword(login.email.value)
+    login.needVerify.value = true
+  } catch(e: unknown) {
+    console.log((e as Error).message)
+  }
 }
 
 const enterVerify = () => {
@@ -27,9 +32,9 @@ const login = {
   <LoginContent title="Reset your password">
     <Card>
       <BasicForm>
-        <InputField v-if="!login.needVerify" v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
+        <InputField v-if="!login.needVerify.value" v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
-        <InputField v-if="login.needVerify" v-model="login.code.value" id="code" name="code" input-type="code" autocomplete="">Verification Code</InputField>
+        <InputField v-if="login.needVerify.value" v-model="login.code.value" id="code" name="code" input-type="code" autocomplete="">Verification Code</InputField>
 
         <div class="flex items-center justify-between">
           <div class="text-sm">

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { Auth } from 'aws-amplify'
 import { ref } from 'vue'
+import { Auth } from 'aws-amplify'
 import { useRouter } from 'vue-router'
 import InputField from '@/components/UIElements/InputField.vue'
 import PrimaryButton from '@/components/UIElements/PrimaryButton.vue'
 import BasicForm from '@/components/UIElements/BasicForm.vue'
-import Checkbox from '@/components/UIElements/Checkbox.vue'
 import Card from '@/components/UIElements/Card.vue'
 import ErrorBanner from '@/components/UIElements/ErrorBanner.vue'
 import LoginContent from '../../components/LoginElements/LoginContent.vue'
@@ -51,9 +50,9 @@ const signIn = async () => {
         <ErrorBanner v-if="errors.hasErrors">{{ errors.message }}</ErrorBanner>
       </Transition>
       <BasicForm>
-        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
+        <InputField v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
-        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>
+        <InputField v-model="login.password.value" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>
 
         <div class="flex items-center justify-between">
           <div class="text-sm">
