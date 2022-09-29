@@ -22,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/auth/Login.vue'),
+  },
+  {
+    path: '/forgot',
+    name: 'forgot',
+    component: () => import('@/views/auth/Forgot.vue')
   }
 ]
 
@@ -39,7 +44,8 @@ router.beforeEach(async (to, from) => {
     }
   }
 
-  if (to.name == 'login') {
+  // If someone has a valid login, they dont need these routes. They should logout first - redirect to dashboard.
+  if (to.name == 'login' || to.name == 'register' || to.name == 'forgot') {
     try {
       await Auth.currentSession()
       router.push('dashboard')

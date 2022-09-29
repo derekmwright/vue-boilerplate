@@ -1,18 +1,18 @@
 <script setup lang="ts">
+import { Auth } from 'aws-amplify'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import InputField from '@/components/UIElements/InputField.vue'
 import PrimaryButton from '@/components/UIElements/PrimaryButton.vue'
 import BasicForm from '@/components/UIElements/BasicForm.vue'
 import Checkbox from '@/components/UIElements/Checkbox.vue'
 import Card from '@/components/UIElements/Card.vue'
-import { Auth } from 'aws-amplify'
-import { ref } from 'vue'
 import ErrorBanner from '@/components/UIElements/ErrorBanner.vue'
-import { useRouter } from 'vue-router'
+import LoginContent from '../../components/LoginElements/LoginContent.vue'
 
 const login = {
-  email: '',
-  password: '',
-  remember: 'off',
+  email: ref(''),
+  password: ref(''),
 }
 
 let errors = ref({
@@ -24,7 +24,7 @@ const router = useRouter()
 
 const signIn = async () => {
   try {
-    const auth = await Auth.signIn(login.email, login.password)
+    const auth = await Auth.signIn(login.email.value, login.password.value)
     if (errors.value.hasErrors) {
       errors.value.hasErrors = false
       errors.value.message = ''
@@ -38,40 +38,34 @@ const signIn = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <img class="mx-auto h-48 w-auto" src="https://via.placeholder.com/192" alt="Company Name" />
-      <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-zinc-500">Sign in to your account</h2>
-    </div>
+  <LoginContent title="Login to the site">
+    <Card>
+      <Transition
+        enter-active-class="duration-300 ease-out"
+        enter-from-class="transform opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="transform opacity-0"
+      >
+        <ErrorBanner v-if="errors.hasErrors">{{ errors.message }}</ErrorBanner>
+      </Transition>
+      <BasicForm>
+        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <Card>
-        <Transition
-          enter-active-class="duration-300 ease-out"
-          enter-from-class="transform opacity-0"
-          enter-to-class="opacity-100"
-          leave-active-class="duration-200 ease-in"
-          leave-from-class="opacity-100"
-          leave-to-class="transform opacity-0"
-        >
-          <ErrorBanner v-if="errors.hasErrors">{{ errors.message }}</ErrorBanner>
-        </Transition>
-        <BasicForm>
-          <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
+        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>
 
-          <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>
-
-          <div class="flex items-center justify-between">
-            <Checkbox v-model="login.remember" id="remember-me" name="remember-me">Remember Me</Checkbox>
-
-            <div class="text-sm">
-              <a href="#" class="font-medium text-indigo-600 dark:text-indigo-500 dark:hover:text-indigo-400 hover:text-indigo-500">Forgot your password?</a>
-            </div>
+        <div class="flex items-center justify-between">
+          <div class="text-sm">
+            <RouterLink :to="{name: 'register'}" class="font-medium text-indigo-600 dark:text-indigo-500 dark:hover:text-indigo-400 hover:text-indigo-500">New User? Sign Up</RouterLink>
           </div>
+          <div class="text-sm">
+            <RouterLink :to="{name: 'forgot'}" class="font-medium text-indigo-600 dark:text-indigo-500 dark:hover:text-indigo-400 hover:text-indigo-500">Forgot your password?</RouterLink>
+          </div>
+        </div>
 
-          <PrimaryButton :full-width="true" @click.preventDefault="signIn()">Sign In</PrimaryButton>
-        </BasicForm>
-      </Card>
-    </div>
-  </div>
+        <PrimaryButton :full-width="true" @click.preventDefault="signIn()">Sign In</PrimaryButton>
+      </BasicForm>
+    </Card>
+  </LoginContent>
 </template>
