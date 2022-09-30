@@ -8,6 +8,7 @@ import BasicForm from '@/components/UIElements/BasicForm.vue'
 import Card from '@/components/UIElements/Card.vue'
 import ErrorBanner from '@/components/UIElements/ErrorBanner.vue'
 import LoginContent from '../../components/LoginElements/LoginContent.vue'
+import Fade from '../../components/Transitions/Fade.vue'
 
 const login = {
   email: ref(''),
@@ -23,7 +24,7 @@ const router = useRouter()
 
 const signIn = async () => {
   try {
-    const auth = await Auth.signIn(login.email.value, login.password.value)
+    await Auth.signIn(login.email.value, login.password.value)
     if (errors.hasErrors.value) {
       errors.hasErrors.value = false
       errors.message.value = ''
@@ -39,16 +40,9 @@ const signIn = async () => {
 <template>
   <LoginContent title="Login to the site">
     <Card>
-      <Transition
-        enter-active-class="duration-300 ease-out"
-        enter-from-class="transform opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="duration-200 ease-in"
-        leave-from-class="opacity-100"
-        leave-to-class="transform opacity-0"
-      >
+      <Fade>
         <ErrorBanner v-if="errors.hasErrors.value">{{ errors.message.value }}</ErrorBanner>
-      </Transition>
+      </Fade>
       <BasicForm>
         <InputField v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
