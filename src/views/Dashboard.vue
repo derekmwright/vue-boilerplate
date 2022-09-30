@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Auth } from 'aws-amplify';
 import { useRouter } from 'vue-router';
+import PrimaryButton from '../components/UIElements/PrimaryButton.vue';
 
 const router = useRouter()
 
@@ -17,6 +18,6 @@ const logout = async () => {
 <template>
   <div>
   Dashboard Page
-  <button class="button" @click="logout()">Logout</button>
+  <PrimaryButton @click="logout()">Logout</PrimaryButton>
   </div>
 </template>

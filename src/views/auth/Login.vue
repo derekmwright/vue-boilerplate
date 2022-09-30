@@ -7,32 +7,32 @@ import PrimaryButton from '@/components/UIElements/PrimaryButton.vue'
 import BasicForm from '@/components/UIElements/BasicForm.vue'
 import Card from '@/components/UIElements/Card.vue'
 import ErrorBanner from '@/components/UIElements/ErrorBanner.vue'
-import LoginContent from '../../components/LoginElements/LoginContent.vue'
-import Fade from '../../components/Transitions/Fade.vue'
+import LoginContent from '@/components/LoginElements/LoginContent.vue'
+import Fade from '@/components/Transitions/Fade.vue'
 
-const login = {
-  email: ref(''),
-  password: ref(''),
-}
+const login = ref({
+  email: '',
+  password: '',
+})
 
-const errors = {
-  hasErrors: ref(false),
-  message: ref(''),
-}
+const errors = ref({
+  hasErrors: false,
+  message: '',
+})
 
 const router = useRouter()
 
 const signIn = async () => {
   try {
-    await Auth.signIn(login.email.value, login.password.value)
-    if (errors.hasErrors.value) {
-      errors.hasErrors.value = false
-      errors.message.value = ''
+    await Auth.signIn(login.value.email, login.value.password)
+    if (errors.value.hasErrors) {
+      errors.value.hasErrors = false
+      errors.value.message = ''
     }
     router.push('dashboard')
   } catch(e: unknown) {
-    errors.message.value = (e as Error).message
-    errors.hasErrors.value = true
+    errors.value.message = (e as Error).message
+    errors.value.hasErrors = true
   }
 }
 </script>
@@ -41,12 +41,12 @@ const signIn = async () => {
   <LoginContent title="Login to the site">
     <Card>
       <Fade>
-        <ErrorBanner v-if="errors.hasErrors.value">{{ errors.message.value }}</ErrorBanner>
+        <ErrorBanner v-if="errors.hasErrors">{{ errors.message }}</ErrorBanner>
       </Fade>
       <BasicForm>
-        <InputField v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
+        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
-        <InputField v-model="login.password.value" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>
+        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>
 
         <div class="flex items-center justify-between">
           <div class="text-sm">
