@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 import LoginContent from '@/components/LoginElements/LoginContent.vue'
 import BasicForm from '../../components/UIElements/BasicForm.vue'
 import Card from '../../components/UIElements/Card.vue'

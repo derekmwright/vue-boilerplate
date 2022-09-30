@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, Ref, ref } from 'vue'
+import { inject, ref } from 'vue'
 import { Auth } from 'aws-amplify'
 import { useRouter } from 'vue-router'
 import InputField from '@/components/UIElements/InputField.vue'

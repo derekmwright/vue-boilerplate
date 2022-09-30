@@ -1,4 +1,4 @@
-import { InjectionKey } from "vue"
+import { InjectionKey } from 'vue'
 
 export interface NotificationOpts {
   show: boolean
