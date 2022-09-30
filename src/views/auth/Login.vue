@@ -15,24 +15,19 @@ const login = ref({
   password: '',
 })
 
-const errors = ref({
-  hasErrors: false,
-  message: '',
-})
+const errors = ref<string[]>([])
 
 const router = useRouter()
 
 const signIn = async () => {
   try {
     await Auth.signIn(login.value.email, login.value.password)
-    if (errors.value.hasErrors) {
-      errors.value.hasErrors = false
-      errors.value.message = ''
+    if (errors.value.length) {
+      errors.value = []
     }
     router.push('dashboard')
   } catch(e: unknown) {
-    errors.value.message = (e as Error).message
-    errors.value.hasErrors = true
+    errors.value.push((e as Error).message)
   }
 }
 </script>
@@ -41,9 +36,9 @@ const signIn = async () => {
   <LoginContent title="Login to the site">
     <Card>
       <Fade>
-        <ErrorBanner v-if="errors.hasErrors">{{ errors.message }}</ErrorBanner>
+        <ErrorBanner v-if="errors.length" :errors="errors" />
       </Fade>
-      <BasicForm>
+      <BasicForm id="login" @submit.preventDefault="signIn()">
         <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
         <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>

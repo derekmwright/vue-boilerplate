@@ -47,7 +47,7 @@ const update = async () => {
     console.log('yay, now nav!')
     router.push('login')
   } catch (e: unknown) {
-    const err = (e as Error)
+    const err = e as Error
 
     login.value.password = ''
     login.value.confirmPassword = ''

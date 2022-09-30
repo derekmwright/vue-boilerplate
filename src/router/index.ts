@@ -27,6 +27,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/forgot',
     name: 'forgot',
     component: () => import('@/views/auth/Forgot.vue')
+  },
+  {
+    path: '/verify',
+    name: 'verify',
+    component: () => import('@/views/auth/Verify.vue')
   }
 ]
 
