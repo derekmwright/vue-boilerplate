@@ -2,8 +2,7 @@
 
 The goal of this repo is to provide a good jumping off point to begin rapidly building out
 an SPA with Vue3, Vite, and AWS Cognito for user authentication. There are some basic route guards
-and views in place for demonstration purposes. The code also comes with a few UI components already
-created that leverage tailwind CSS.
+and views in place for demonstration purposes. The code also comes with a few UI components that leverage tailwind CSS.
 
 ## Getting Started
 
