@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, Ref, ref } from 'vue'
 import { Auth } from 'aws-amplify'
 import { useRouter } from 'vue-router'
 import InputField from '@/components/UIElements/InputField.vue'
@@ -9,6 +9,7 @@ import Card from '@/components/UIElements/Card.vue'
 import ErrorBanner from '@/components/UIElements/ErrorBanner.vue'
 import LoginContent from '@/components/LoginElements/LoginContent.vue'
 import Fade from '@/components/Transitions/Fade.vue'
+import { NotificationOpts, sendNotification, notification } from '../../models/notification'
 
 const login = ref({
   email: '',
@@ -16,8 +17,8 @@ const login = ref({
 })
 
 const errors = ref<string[]>([])
-
 const router = useRouter()
+const notify = inject(notification) as sendNotification
 
 const signIn = async () => {
   try {
@@ -25,6 +26,13 @@ const signIn = async () => {
     if (errors.value.length) {
       errors.value = []
     }
+    const notifyOpts: NotificationOpts = {
+      show: true,
+      title: 'Signed in',
+      message: 'You have been successfully signed in to the app.',
+      icon: {},
+    }
+    notify(notifyOpts)
     router.push('dashboard')
   } catch(e: unknown) {
     errors.value.push((e as Error).message)
