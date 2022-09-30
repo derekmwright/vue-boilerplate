@@ -1,4 +1,4 @@
-export const validatePassword = (password: string): Array<string> => {
+export const validateNewPassword = (password: string): Array<string> => {
   let errors = Array<string>()
 
   if (password.length < 8) {
@@ -23,6 +23,16 @@ export const validatePassword = (password: string): Array<string> => {
 
   if (/^\s/.test(password) || /.+\s$/.test(password)) {
     errors.push("Password cannot start or end with a space")
+  }
+
+  return errors
+}
+
+export const validatePassword = (password: string): Array<string> => {
+  let errors = Array<string>()
+
+  if (!password.length) {
+    errors.push("Password cannot be empty")
   }
 
   return errors

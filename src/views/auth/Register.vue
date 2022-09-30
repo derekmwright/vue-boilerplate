@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Auth } from 'aws-amplify'
 import { ref } from 'vue'
-import { validateEmail, validatePassword } from '../../validations'
+import { validateEmail, validateNewPassword } from '../../validations'
 import LoginContent from '@/components/LoginElements/LoginContent.vue'
 import Card from '@/components/UIElements/Card.vue'
 import InputField from '@/components/UIElements/InputField.vue'
@@ -55,14 +55,14 @@ const inputEmailValidate = () => {
 }
 
 const inputPasswordValidate = () => {
-  passErrs.value = validatePassword(login.value.password)
+  passErrs.value = validateNewPassword(login.value.password)
   confirm()
 }
 
 // Run all validation functions
 const validate = (): boolean => {
   emailErrs.value = validateEmail(login.value.email)
-  passErrs.value = validatePassword(login.value.password)
+  passErrs.value = validateNewPassword(login.value.password)
 
   confirm()
 

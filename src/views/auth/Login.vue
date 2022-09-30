@@ -10,6 +10,7 @@ import ErrorBanner from '@/components/UIElements/ErrorBanner.vue'
 import LoginContent from '@/components/LoginElements/LoginContent.vue'
 import Fade from '@/components/Transitions/Fade.vue'
 import { NotificationOpts, sendNotification, notification } from '../../models/notification'
+import { validateEmail, validatePassword } from '../../validations'
 
 const login = ref({
   email: '',
@@ -21,22 +22,38 @@ const router = useRouter()
 const notify = inject(notification) as sendNotification
 
 const signIn = async () => {
-  try {
-    await Auth.signIn(login.value.email, login.value.password)
-    if (errors.value.length) {
-      errors.value = []
+  if (validate()) {
+    try {
+      await Auth.signIn(login.value.email, login.value.password)
+      if (errors.value.length) {
+        errors.value = []
+      }
+      const notifyOpts: NotificationOpts = {
+        show: true,
+        title: 'Signed in',
+        message: 'You have been successfully signed in to the app.',
+        icon: {},
+      }
+      notify(notifyOpts)
+      router.push('dashboard')
+    } catch (e: unknown) {
+      errors.value.push((e as Error).message)
     }
-    const notifyOpts: NotificationOpts = {
-      show: true,
-      title: 'Signed in',
-      message: 'You have been successfully signed in to the app.',
-      icon: {},
-    }
-    notify(notifyOpts)
-    router.push('dashboard')
-  } catch(e: unknown) {
-    errors.value.push((e as Error).message)
   }
+}
+
+const emailErrs = ref<Array<string>>([])
+const passErrs = ref<Array<string>>([])
+
+const validate = (): boolean => {
+  emailErrs.value = validateEmail(login.value.email)
+  passErrs.value = validatePassword(login.value.password)
+
+  if (emailErrs.value.length != 0 || passErrs.value.length != 0) {
+    return false
+  }
+
+  return true
 }
 </script>
 
@@ -47,9 +64,9 @@ const signIn = async () => {
         <ErrorBanner v-if="errors.length" :errors="errors" />
       </Fade>
       <BasicForm id="login" @submit.preventDefault="signIn()">
-        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
+        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email" :errors="emailErrs">Email</InputField>
 
-        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password">Password</InputField>
+        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password" :errors="passErrs">Password</InputField>
 
         <div class="flex items-center justify-between">
           <div class="text-sm">

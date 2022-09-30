@@ -1,4 +1,4 @@
 import { validateEmail } from "./email"
-import { validatePassword } from "./password"
+import { validateNewPassword, validatePassword } from "./password"
 
-export { validateEmail, validatePassword }
+export { validateEmail, validateNewPassword, validatePassword }
