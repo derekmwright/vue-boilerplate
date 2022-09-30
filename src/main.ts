@@ -1,8 +1,7 @@
 import { createApp } from 'vue'
 import './style.css'
 import { router } from './router'
-import { createColorScheme } from './plugins/ColorScheme'
-import { Amplify, Auth } from 'aws-amplify'
+import { Amplify } from 'aws-amplify'
 
 import App from './App.vue'
 
@@ -14,6 +13,4 @@ Amplify.configure({
   },
 });
 
-const cs = createColorScheme({primary: "indigo"})
-
-createApp(App).use(router).use(cs).mount('#app')
+createApp(App).use(router).mount('#app')
