@@ -14,24 +14,24 @@ const login = {
   password: ref(''),
 }
 
-let errors = ref({
-  hasErrors: false,
-  message: '',
-})
+const errors = {
+  hasErrors: ref(false),
+  message: ref(''),
+}
 
 const router = useRouter()
 
 const signIn = async () => {
   try {
     const auth = await Auth.signIn(login.email.value, login.password.value)
-    if (errors.value.hasErrors) {
-      errors.value.hasErrors = false
-      errors.value.message = ''
+    if (errors.hasErrors.value) {
+      errors.hasErrors.value = false
+      errors.message.value = ''
     }
     router.push('dashboard')
   } catch(e: unknown) {
-    errors.value.message = (e as Error).message
-    errors.value.hasErrors = true
+    errors.message.value = (e as Error).message
+    errors.hasErrors.value = true
   }
 }
 </script>
@@ -47,7 +47,7 @@ const signIn = async () => {
         leave-from-class="opacity-100"
         leave-to-class="transform opacity-0"
       >
-        <ErrorBanner v-if="errors.hasErrors">{{ errors.message }}</ErrorBanner>
+        <ErrorBanner v-if="errors.hasErrors.value">{{ errors.message.value }}</ErrorBanner>
       </Transition>
       <BasicForm>
         <InputField v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>

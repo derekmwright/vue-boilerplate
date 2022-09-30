@@ -6,6 +6,7 @@ import LoginContent from '../../components/LoginElements/LoginContent.vue'
 import InputField from '../../components/UIElements/InputField.vue'
 import PrimaryButton from '../../components/UIElements/PrimaryButton.vue'
 import { ref } from 'vue'
+import { router } from '../../router'
 
 const send = async () => {
   try {
@@ -16,15 +17,51 @@ const send = async () => {
   }
 }
 
-const enterVerify = () => {
-  login.needVerify.value = true
-  console.log(login)
+const verify = () => {
+  login.updatePass.value = true
+  login.needVerify.value = false
+}
+
+const update = async () => {
+  try {
+    await Auth.forgotPasswordSubmit(
+      login.email.value,
+      login.code.value,
+      login.password.value,
+    )
+    await router.push('login')
+  } catch (e: unknown) {
+    const err = (e as Error)
+    errors.hasErrors.value = true
+    errors.message.value = err.message
+
+    switch(err.name) {
+      case 'CodeMismatchException': {
+        login.needVerify.value = true
+        login.updatePass.value = false
+      }
+      case 'LimitExceededException': {
+        login.needVerify.value = false
+        login.updatePass.value = false
+        login.code.value = ''   
+      }
+    }
+    console.log(err)
+  }
+}
+
+const errors = {
+  hasErrors: ref(false),
+  message: ref(''),
 }
 
 const login = {
   email: ref(''),
   needVerify: ref(false),
+  updatePass: ref(false),
   code: ref(''),
+  password: ref(''),
+  confirmPassword: ref(''),
 }
 </script>
 
@@ -32,9 +69,13 @@ const login = {
   <LoginContent title="Reset your password">
     <Card>
       <BasicForm>
-        <InputField v-if="!login.needVerify.value" v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
+        <InputField v-if="!login.needVerify.value && !login.updatePass.value" v-model="login.email.value" id="email" name="email" input-type="email" autocomplete="email">Email</InputField>
 
-        <InputField v-if="login.needVerify.value" v-model="login.code.value" id="code" name="code" input-type="code" autocomplete="">Verification Code</InputField>
+        <InputField v-if="login.needVerify.value" v-model="login.code.value" id="code" name="code" input-type="text" autocomplete="">Verification Code</InputField>
+
+        <InputField v-if="login.updatePass.value" v-model="login.password.value" id="password" name="password" input-type="password" autocomplete="">Password</InputField>
+
+        <InputField v-if="login.updatePass.value" v-model="login.confirmPassword.value" id="confirmPassword" name="confirmPassword" input-type="password" autocomplete="">Confirm Password</InputField>
 
         <div class="flex items-center justify-between">
           <div class="text-sm">
@@ -45,8 +86,9 @@ const login = {
           </div>
         </div>
 
-        <PrimaryButton :full-width="true" @click.preventDefault="send()">Send Reset</PrimaryButton>
-        <PrimaryButton :full-width="true" @click.preventDefault="enterVerify()">Enter Verification Code</PrimaryButton>
+        <PrimaryButton v-if="!login.needVerify.value && !login.updatePass.value" :full-width="true" @click.preventDefault="send()">Send Reset</PrimaryButton>
+        <PrimaryButton v-if="login.needVerify.value" :full-width="true" @click.preventDefault="verify()">Verify</PrimaryButton>
+        <PrimaryButton v-if="login.updatePass.value" :full-width="true" @click.preventDefault="update()">Update Password</PrimaryButton>
       </BasicForm>
     </Card>
   </LoginContent>
