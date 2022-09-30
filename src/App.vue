@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { InjectionKey, provide, ref } from "vue";
+import { provide, ref } from "vue";
 import DefaultNotification from '@/components/Notifications/DefaultNotification.vue'
-import { NotificationOpts, sendNotification, notification } from "./models/notification";
+import { NotificationOpts,  notification } from "./models/notification";
 
 const flash = ref({
   show: false,
