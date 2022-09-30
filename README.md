@@ -1,16 +1,22 @@
-# Vue 3 + TypeScript + Vite
+# Vue + Vite + TypeScript + AWS Cognito Authentication Boilerplate
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The goal of this repo is to provide a good jumping off point to begin rapidly building out
+an SPA with Vue3, Vite, and AWS Cognito for user authentication. There are some basic route guards
+and views in place for demonstration purposes. The code also comes with a few UI components already
+created that leverage tailwind CSS.
 
-## Recommended IDE Setup
+## Getting Started
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+To get started, clone this repository and create a `.env.local` file in the root with your
+AWS Cognito UserPool properties:
 
-## Type Support For `.vue` Imports in TS
+```env
+VITE_APP_COGNITO_REGION="<cognito_region>"
+VITE_APP_COGNITO_USERPOOLID="<userpool_id>"
+VITE_APP_COGNITO_CLIENTID="<app_client_id>"
+```
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+## Development
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+Please feel free to send pull requests if you find glaring issues with the code. Submit an issue
+if there is a feature you'd like to see in the boilerplate.
