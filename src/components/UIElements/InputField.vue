@@ -70,9 +70,9 @@ const inputClasses = (errors: Array<string>): string => {
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       />
       <div v-if="errors.length" class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-        <ExclamationCircleIcon class="h-5 w-5 text-red-500 dark:text-red-700" aria-hidden="true" />
+        <ExclamationCircleIcon class="h-5 w-5 text-red-500 dark:text-red-500" aria-hidden="true" />
       </div>
     </div>
-    <p v-for="error in errors" class="mt-2 text-sm text-red-600 dark:text-red-700" id="email-error">{{ error }}</p>
+    <p v-for="error in errors" class="mt-2 text-sm text-red-600 dark:text-red-500" id="email-error">{{ error }}</p>
   </div>
 </template>

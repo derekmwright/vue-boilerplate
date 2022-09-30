@@ -13,6 +13,7 @@ import { NotificationOpts, sendNotification, notification } from '../../models/n
 import { validateEmail, validatePassword } from '../../validations'
 
 const login = ref({
+  submitAttempt: false,
   email: '',
   password: '',
 })
@@ -39,6 +40,8 @@ const signIn = async () => {
     } catch (e: unknown) {
       errors.value.push((e as Error).message)
     }
+  } else {
+    login.value.submitAttempt = true
   }
 }
 
@@ -55,6 +58,14 @@ const validate = (): boolean => {
 
   return true
 }
+
+const inputEmailValidate = () => {
+  emailErrs.value = validateEmail(login.value.email)
+}
+
+const inputPasswordValidate = () => {
+  passErrs.value = validatePassword(login.value.password)
+}
 </script>
 
 <template>
@@ -64,9 +75,9 @@ const validate = (): boolean => {
         <ErrorBanner v-if="errors.length" :errors="errors" />
       </Fade>
       <BasicForm id="login" @submit.preventDefault="signIn">
-        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email" :errors="emailErrs">Email</InputField>
+        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email" :errors="emailErrs" @input="login.submitAttempt ? inputEmailValidate() : ()=>{}">Email</InputField>
 
-        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password" :errors="passErrs">Password</InputField>
+        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password" :errors="passErrs" @input="login.submitAttempt ? inputPasswordValidate() : ()=>{}">Password</InputField>
 
         <div class="flex items-center justify-between">
           <div class="text-sm">

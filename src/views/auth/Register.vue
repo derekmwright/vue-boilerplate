@@ -82,9 +82,9 @@ const confPassErrs = ref<Array<string>>([])
   <LoginContent title="Sign up for a new account">
     <Card>
       <BasicForm id="register">
-        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email" :errors="emailErrs" placeholder="johndoe@example.com" @input="login.submitAttempt ? inputEmailValidate : ()=>{}">Email</InputField>
+        <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email" :errors="emailErrs" placeholder="johndoe@example.com" @input="login.submitAttempt ? inputEmailValidate() : ()=>{}">Email</InputField>
 
-        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="" :errors="passErrs" @input="login.submitAttempt ? inputPasswordValidate : ()=>{}">Password</InputField>
+        <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="" :errors="passErrs" @input="login.submitAttempt ? inputPasswordValidate() : ()=>{}">Password</InputField>
 
         <InputField v-model="login.confirmPassword" id="confirm_password" name="confirm_password" input-type="password" autocomplete="" :errors="confPassErrs" @input="confirm">Confirm Password</InputField>
 
