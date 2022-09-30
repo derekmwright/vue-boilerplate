@@ -63,7 +63,7 @@ const validate = (): boolean => {
       <Fade>
         <ErrorBanner v-if="errors.length" :errors="errors" />
       </Fade>
-      <BasicForm id="login" @submit.preventDefault="signIn()">
+      <BasicForm id="login" @submit.preventDefault="signIn">
         <InputField v-model="login.email" id="email" name="email" input-type="email" autocomplete="email" :errors="emailErrs">Email</InputField>
 
         <InputField v-model="login.password" id="password" name="password" input-type="password" autocomplete="current-password" :errors="passErrs">Password</InputField>
@@ -77,7 +77,7 @@ const validate = (): boolean => {
           </div>
         </div>
 
-        <PrimaryButton :full-width="true" @click.preventDefault="signIn()">Sign In</PrimaryButton>
+        <PrimaryButton :full-width="true" @click.preventDefault="signIn">Sign In</PrimaryButton>
       </BasicForm>
     </Card>
   </LoginContent>

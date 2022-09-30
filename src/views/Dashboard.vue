@@ -18,6 +18,6 @@ const logout = async () => {
 <template>
   <div>
   Dashboard Page
-  <PrimaryButton @click="logout()">Logout</PrimaryButton>
+  <PrimaryButton @click="logout">Logout</PrimaryButton>
   </div>
 </template>

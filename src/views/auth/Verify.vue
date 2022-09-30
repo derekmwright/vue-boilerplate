@@ -38,7 +38,7 @@ const verify = async () => {
           </div>
         </div>
 
-        <PrimaryButton :full-width="true" @click.preventDefault="verify()">Verify Code</PrimaryButton>
+        <PrimaryButton :full-width="true" @click.preventDefault="verify">Verify Code</PrimaryButton>
       </BasicForm>
     </Card>
   </LoginContent>

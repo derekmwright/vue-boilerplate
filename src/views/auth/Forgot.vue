@@ -115,14 +115,14 @@ const login = ref({
         </div>
 
         <FadeGroup>
-          <PrimaryButton v-if="!login.needVerify && !login.updatePass" :full-width="true" @click.preventDefault="send()">Send Reset</PrimaryButton>
-          <PrimaryButton v-if="!login.needVerify && !login.updatePass" :full-width="true" @click.preventDefault="code()">Enter Code</PrimaryButton>
+          <PrimaryButton v-if="!login.needVerify && !login.updatePass" :full-width="true" @click.preventDefault="send">Send Reset</PrimaryButton>
+          <PrimaryButton v-if="!login.needVerify && !login.updatePass" :full-width="true" @click.preventDefault="code">Enter Code</PrimaryButton>
         </FadeGroup>
         <Fade>
-          <PrimaryButton v-if="login.needVerify" :full-width="true" @click.preventDefault="verify()">Verify</PrimaryButton>
+          <PrimaryButton v-if="login.needVerify" :full-width="true" @click.preventDefault="verify">Verify</PrimaryButton>
         </Fade>
         <Fade>
-          <PrimaryButton v-if="login.updatePass" :full-width="true" @click.preventDefault="update()">Update Password</PrimaryButton>
+          <PrimaryButton v-if="login.updatePass" :full-width="true" @click.preventDefault="update">Update Password</PrimaryButton>
         </Fade>
       </BasicForm>
     </Card>
